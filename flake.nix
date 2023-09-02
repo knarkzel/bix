@@ -18,7 +18,7 @@
       config ? {},
     }: let
       manifest = pkgs.lib.importJSON packages;
-      site-src = pkgs.buildNpmPackage {
+      siteSrc = pkgs.buildNpmPackage {
         inherit src;
         pname = manifest.name;
         version = manifest.version;
@@ -29,7 +29,7 @@
       } // config;
     in
       pkgs.writeShellScriptBin manifest.name ''
-        ${pkgs.bun}/bin/bun ${site-src}/build
+        ${pkgs.bun}/bin/bun ${siteSrc}/build
       '';
   };
 }
