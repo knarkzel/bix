@@ -21,7 +21,7 @@
       };
     in {
       pkgs.writeShellScriptBin = "${packageJSON.name}" ''
-        ${pkgs.nodejs}/bin/node ${site-src}/build
+        ${pkgs.bun}/bin/bun ${site-src}/build/index.js
       ''; 
     };
   };
