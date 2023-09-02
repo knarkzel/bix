@@ -13,22 +13,22 @@
   in {
     buildBunPackage = {
       src,
-      packages,
       hash,
+      packages,
       config ? {},
     }: let
-      packageJSON = pkgs.lib.importJSON packages;
+      manifest = pkgs.lib.importJSON packages;
       site-src = pkgs.buildNpmPackage {
-        inherit src;
-        pname = "${packageJSON.name}";
-        version = packageJSON.version;
-        npmDepsHash = hash;
-        installPhase = ''
-          cp -r . $out
-        '';
-      } // config;
+          inherit src;
+          pname = manifest.name;
+          version = manifest.version;
+          npmDepsHash = hash;
+          installPhase = ''
+            cp -r . $out
+          '';
+        } // config;
     in {
-      pkgs.writeShellScriptBin = "${packageJSON.name}" ''
+      pkgs.writeShellScriptBin = manifest.name ''
         ${pkgs.bun}/bin/bun ${site-src}/build
       '';
     };
