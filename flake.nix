@@ -20,7 +20,7 @@
         '';
       };
     in {
-      packages.default = pkgs.writeShellScriptBin "${packageJSON.name}" ''
+      pkgs.writeShellScriptBin "${packageJSON.name}" ''
         ${pkgs.nodejs}/bin/node ${site-src}/build
       ''; 
     };
