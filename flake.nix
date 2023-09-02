@@ -24,12 +24,13 @@
         version = manifest.version;
         npmDepsHash = hash;
         installPhase = ''
+          ls .
+          ls $out
           cp -r . $out
         '';
       } // config;
     in
       pkgs.writeShellScriptBin manifest.name ''
-        ls ${siteSrc}
         ${pkgs.bun}/bin/bun ${siteSrc}/build/index.js
       '';
   };
