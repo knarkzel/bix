@@ -19,18 +19,17 @@
     }: let
       manifest = pkgs.lib.importJSON packages;
       site-src = pkgs.buildNpmPackage {
-          inherit src;
-          pname = manifest.name;
-          version = manifest.version;
-          npmDepsHash = hash;
-          installPhase = ''
-            cp -r . $out
-          '';
-        } // config;
-    in {
-      pkgs.writeShellScriptBin = manifest.name ''
+        inherit src;
+        pname = manifest.name;
+        version = manifest.version;
+        npmDepsHash = hash;
+        installPhase = ''
+          cp -r . $out
+        '';
+      } // config;
+    in
+      pkgs.writeShellScriptBin manifest.name ''
         ${pkgs.bun}/bin/bun ${site-src}/build
       '';
-    };
   };
 }
