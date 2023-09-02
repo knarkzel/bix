@@ -29,7 +29,8 @@
       } // config;
     in
       pkgs.writeShellScriptBin manifest.name ''
-        ${pkgs.bun}/bin/bun ${siteSrc}/build
+        ls ${siteSrc}
+        ${pkgs.bun}/bin/bun ${siteSrc}/build/index.js
       '';
   };
 }
