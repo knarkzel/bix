@@ -18,20 +18,20 @@
       config ? {},
     }: let
       manifest = pkgs.lib.importJSON packages;
+    in rec {
       siteSrc = pkgs.buildNpmPackage {
         inherit src;
         pname = manifest.name;
         version = manifest.version;
         npmDepsHash = hash;
         installPhase = ''
-          ls .
-          ls $out
           cp -r . $out
         '';
       } // config;
-    in
-      pkgs.writeShellScriptBin manifest.name ''
+
+      default = pkgs.writeShellScriptBin manifest.name ''
         ${pkgs.bun}/bin/bun ${siteSrc}/build/index.js
       '';
+    };
   };
 }
