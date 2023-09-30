@@ -33,5 +33,28 @@
         ${pkgs.bun}/bin/bun ${siteSrc}/build/index.js
       '';
     };
+
+    buildNodePackage = {
+      src,
+      hash,
+      packages,
+      config ? {},
+    }: let
+      manifest = pkgs.lib.importJSON packages;
+    in rec {
+      siteSrc = pkgs.buildNpmPackage {
+        inherit src;
+        pname = manifest.name;
+        version = manifest.version;
+        npmDepsHash = hash;
+        installPhase = ''
+          cp -r . $out
+        '';
+      } // config;
+
+      default = pkgs.writeShellScriptBin manifest.name ''
+        ${pkgs.nodejs}/bin/node ${siteSrc}/build
+      '';
+    };
   };
 }
