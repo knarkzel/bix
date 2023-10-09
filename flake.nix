@@ -19,7 +19,7 @@
     }: let
       manifest = pkgs.lib.importJSON packages;
     in rec {
-      siteSrc = pkgs.buildNpmPackage {
+      siteSrc = pkgs.buildNpmPackage ({
         inherit src;
         pname = manifest.name;
         version = manifest.version;
@@ -27,7 +27,7 @@
         installPhase = ''
           cp -r . $out
         '';
-      } // config;
+      } // config);
 
       default = pkgs.writeShellScriptBin manifest.name ''
         ${pkgs.bun}/bin/bun ${siteSrc}/build/index.js
@@ -42,7 +42,7 @@
     }: let
       manifest = pkgs.lib.importJSON packages;
     in rec {
-      siteSrc = pkgs.buildNpmPackage {
+      siteSrc = pkgs.buildNpmPackage ({
         inherit src;
         pname = manifest.name;
         version = manifest.version;
@@ -50,7 +50,7 @@
         installPhase = ''
           cp -r . $out
         '';
-      } // config;
+      } // config);
 
       default = pkgs.writeShellScriptBin manifest.name ''
         ${pkgs.nodejs}/bin/node ${siteSrc}/build
