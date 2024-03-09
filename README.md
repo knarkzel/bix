@@ -1,6 +1,6 @@
 # bix
 
-For bun you need a `yarn.lock`, make sure to install that automatically with following in `~/.bunfig.toml`:
+For `bun` you need a `yarn.lock`, make sure to install that automatically with following in `~/.bunfig.toml`:
 
 ```toml
 [install.lockfile]
